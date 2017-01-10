@@ -1,0 +1,232 @@
+<html>
+
+<head>
+<title>Reaction Tester</title> 
+    
+<!--    Bring in JQuery-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<h1>Test Your Reactions!</h1>
+<h2>Click on the different shapes as quickly as you can.</h2>
+ 
+
+<style type = "text/css"> 
+
+    body{
+        cursor: url('sight.png')68.5 68.5, auto;	
+        background-image:url(nature.gif);
+    }
+    
+    .hand:active {
+    cursor: url(explosion-1.png)27 27, auto;
+}
+
+    h1{
+       color: #cccccc;
+       font-size: 400%;
+    }
+    
+    h2{
+       color: #cccccc;
+       font-size: 200%;
+    }
+
+
+    #shape{
+        width: 200px;
+        height: 200px; 
+        position: relative;
+/*        background-color: red;*/
+        display: none;
+        background-position: center; 
+        border-radius: 50%;
+
+    }
+    
+    p{
+        font-weight: bold;
+        font-size: 150%;
+        color: #cccccc;
+    }
+    
+    
+    
+
+</style>   
+    
+
+        
+<body class = "hand">
+    
+    
+<p id = "time">Time: </p>
+<p id = "highscore">High Score: </p>
+<div id = "shape"></div>
+
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>    
+<script type = "text/javascript">
+    
+        //timer starts and shape appears
+    var start = new Date().getTime();
+    var highscore = 1000;
+    
+    appearAfterDelay();
+    
+    
+    
+    //FUNCTIONS 
+
+    document.onclick = function(){
+        var snd = new Audio("gun.wav");
+        snd.play();
+        snd.currentTime=0;
+    }
+    
+    
+    //each time you make the shape appear change the attributes
+    function makeShapeAppear(){
+    
+    //random width/height
+    var randomWidth = Math.random();           
+    randomWidth = 125 + randomWidth * 200 ;
+    randomWidth = Math.floor(randomWidth);
+    
+    document.getElementById("shape").style.width = randomWidth;    
+    document.getElementById("shape").style.height = randomWidth;    
+    
+        
+    //random color
+//    document.getElementById("shape").style.backgroundColor = getRandomColor();
+    
+        
+   
+        
+
+    //Attempt Image Background
+    if(randomWidth > 90){
+        
+       
+    var pics = new Array("targets/harbaugh.png","targets/obl.png", "targets/red1.png", "targets/hitler.png", "targets/kim.png", "targets/tb.png", "targets/teemo.png", "targets/red2.png");
+    var randPicNum = Math.floor(Math.random() * pics.length);
+    
+   switch(randPicNum){
+       case 0:
+           document.getElementById("shape").style.backgroundImage="url(targets/harbaugh.png)";
+           break;
+       case 1:
+           document.getElementById("shape").style.backgroundImage="url(targets/obl.png)";
+           break;
+           
+       case 2:
+           document.getElementById("shape").style.backgroundImage="url(targets/red1.png)";
+           break;
+           
+       case 3:
+           document.getElementById("shape").style.backgroundImage="url(targets/hitler.png)";
+           break;
+           
+       case 4:
+           document.getElementById("shape").style.backgroundImage="url(targets/kim.png)";
+           break;
+           
+       case 5:
+           document.getElementById("shape").style.backgroundImage="url(targets/tb.png)";
+           break;
+
+       case 6:
+           document.getElementById("shape").style.backgroundImage="url(targets/teemo.png)";
+           break;
+
+       case 7:
+           document.getElementById("shape").style.backgroundImage="url(targets/red2.png)";
+           break;
+           
+       default:
+           alert("out of switch");
+   } 
+        
+ }
+
+       
+        
+    //make it appear 
+    document.getElementById("shape").style.display = "block";
+    start = new Date().getTime();
+    
+        
+//    //Random border radius
+//     var randomRadius = Math.random();
+//                
+//    randomRadius = randomRadius * 2; //gives 1 or 0
+//                
+//    randomRadius = Math.floor(randomRadius);
+//    
+//    if(randomRadius == 1){
+//        document.getElementById("shape").style.borderRadius = '10%';
+//        //alert(randomRadius);
+//    }
+//    else{
+//        document.getElementById("shape").style.borderRadius = '50%';
+//        //alert(randomRadius);
+//    }
+
+        //positioning
+        var top = Math.random() * 500;
+        var left = Math.random() * 1300;
+        
+        document.getElementById("shape").style.top = top + "px";
+        document.getElementById("shape").style.left = left + "px"; 
+    }
+    
+    //calls a function after a certain amount of time
+    function appearAfterDelay(){
+        setTimeout(makeShapeAppear, Math.random() * 2000);
+    }
+    
+    
+    
+    //button is clicked
+        document.getElementById("shape").onclick = function(){
+         
+        document.getElementById("shape").style.display = "none";
+        var end = new Date().getTime();
+        var timeTaken = (end - start) / 1000;
+        
+            
+        document.getElementById("time").innerHTML = "Time: " + timeTaken + " seconds";
+    
+        
+        if(timeTaken < highscore){
+           
+            highscore = timeTaken;
+            document.getElementById("highscore").innerHTML = "Highscore: " + highscore + " seconds";
+        }
+            
+        
+        
+        appearAfterDelay();
+    }
+
+    
+        
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+    
+
+
+</script> 
+    
+    
+    
+</body>
+
+
+</html>
